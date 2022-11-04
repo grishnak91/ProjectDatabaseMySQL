@@ -30,6 +30,7 @@ public class Projects {
 /*Start of menu application*/
 
 	public static void main(String[] args) {
+		
 		new Projects().processUserSelection();
 
 	}
