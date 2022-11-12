@@ -17,13 +17,16 @@ public class Projects {
 	
 	private Scanner scanner = new Scanner(System.in);
 	private ProjectService projectService = new ProjectService();
+	private Project curProject;
 
 /*This List is needed in order to display the menu options to the user.*/
 	
 	
 	//@formatter: off
 	private List<String> operations = List.of(
-			"1) Add a project"
+			"1) Add a project",
+			"2) List projects",
+			"3) Select a project"
 			);
 	//@formatter: on
 
@@ -54,6 +57,13 @@ public class Projects {
 			case 1:
 				createProject();
 				break;
+			case 2:
+				listProjects();
+				break;
+				
+			case 3:
+				selectProject();
+				break;
 				
 			default:
 				System.out.println("\n" + selection + " is not valid. Try again.");
@@ -66,6 +76,28 @@ public class Projects {
 		}
 		
 	}
+
+/*This method gets an input from the user to select a project using the project ID number.*/
+private void selectProject() {
+	listProjects();
+	Integer projectId = getIntInput("Enter a project ID to select a project");
+	
+	curProject = null;
+	
+	curProject = projectService.fetchProjectById(projectId);
+}
+
+/*This method calls the Service class to get a list of all the projects using the 
+ *fetchAllProjects method.*/
+private void listProjects() {
+	List<Project> projects = projectService.fetchAllProjects();
+	
+	System.out.println("\nProjects: ");
+	
+	projects.forEach(project -> System.out.println("   " + project.getProjectId()
+	+ ": " + project.getProjectName()));
+	
+}
 
 /*This method takes the user input and creates the parameters of a new project with
  *the entered data. Each entry by the user will be represented by a row in the database in mysql.*/
@@ -152,6 +184,13 @@ public class Projects {
 		System.out.println("\nAvailable Selection. Press Enter to quit.");
 		
 		operations.forEach(line -> System.out.println("   " + line));
+		
+		if(Objects.isNull(curProject)) {
+			System.out.println("\nYou are not working with a project.");
+		}
+		else {
+			System.out.println("\nYou are working with project: " + curProject);
+		}
 		
 	}
 

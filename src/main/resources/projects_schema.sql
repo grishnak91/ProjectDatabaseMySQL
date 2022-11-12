@@ -35,7 +35,7 @@ CREATE TABLE step(
 );
 
 CREATE TABLE category(
-	category_id INT NOT NULL,
+	category_id INT AUTO_INCREMENT NOT NULL,
 	category_name VARCHAR(128) NOT NULL,
 	PRIMARY KEY (category_id)
 );
